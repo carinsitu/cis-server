@@ -4,6 +4,7 @@
 
 ```
 sudo apt install libsdl2-dev
+bundle install --path vendor/bundle
 ```
 
 ## Usage
