@@ -13,6 +13,9 @@ module Carmaster
       @port = port
       @joystick = SDL2::Joystick.open(joystick)
       @udp_socket = UDPSocket.new
+
+      @joystick_last_forward = 0
+      @joystick_last_backward = 0
     end
 
     def send(data)
@@ -25,9 +28,19 @@ module Carmaster
       when 0
         self.steering= ev.value
       when 2
-        self.throttle= -(ev.value + 32768)/2
+        @joystick_last_backward = -(ev.value + 32768)/2
+        if @joystick_last_forward == 0
+          self.throttle= @joystick_last_backward
+        else
+          self.throttle= 0
+        end
       when 5
-        self.throttle= (ev.value + 32768)/2
+        @joystick_last_forward = (ev.value + 32768)/2
+        if @joystick_last_backward == 0
+          self.throttle= @joystick_last_forward
+        else
+          self.throttle= 0
+        end
       end
     end
 
