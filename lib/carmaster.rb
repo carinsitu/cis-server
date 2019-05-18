@@ -85,7 +85,7 @@ module Carmaster
           end
         end
 
-        sleep 0.1
+        sleep 0.001
       end
     end
   end
