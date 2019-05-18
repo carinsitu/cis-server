@@ -1,5 +1,6 @@
 require 'carmaster/version'
 require 'carmaster/car'
+require 'carmaster/gamecontroller'
 
 require 'sdl2'
 
@@ -12,32 +13,26 @@ module CarMaster
     def initialize
       SDL2.init(SDL2::INIT_JOYSTICK)
 
-      (0...SDL2::Joystick.num_connected_joysticks).each do |i|
-        create_car i
-      end
-    end
+      @game_controllers = {}
 
-    def create_car(joystick)
-      ip = '192.168.37.169'
-      port = 4210
-      puts "Create a Car instance connected to #{ip}:#{port} with joystick: #{joystick}"
-      @car = Car.new ip, port, joystick
+      @cars = [Car.new('192.168.37.169')]
     end
 
     def run # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
       loop do
         while (event = SDL2::Event.poll)
           case event
-          when SDL2::Event::JoyButton
+          when SDL2::Event::JoyAxisMotion, SDL2::Event::JoyButton
             p event
-          when SDL2::Event::JoyAxisMotion
-            p event
-            @car.process_joystick_event event
+            @game_controllers[event.which].process_event event
           when SDL2::Event::JoyDeviceAdded
             p event
-            create_car(event.which)
+            game_controller = GameController.new(event.which)
+            @game_controllers[event.which] = game_controller
+            game_controller.car = @cars.first
           when SDL2::Event::JoyDeviceRemoved
             p event
+            @game_controllers[event.which] = nil
           when SDL2::Event::KeyDown
             exit if event.scancode == SDL2::Key::Scan::ESCAPE
           when SDL2::Event::Quit
