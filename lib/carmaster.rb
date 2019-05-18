@@ -5,7 +5,7 @@ require 'sdl2'
 
 require 'byebug'
 
-module Carmaster
+module CarMaster
   class Error < StandardError; end
 
   class Master

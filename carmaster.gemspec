@@ -4,7 +4,7 @@ require 'carmaster/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'carmaster'
-  spec.version       = Carmaster::VERSION
+  spec.version       = CarMaster::VERSION
   spec.authors       = ['Romuald Conty']
   spec.email         = ['romuald@opus-codium.fr']
 

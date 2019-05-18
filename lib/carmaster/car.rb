@@ -1,6 +1,6 @@
 require 'socket'
 
-module Carmaster
+module CarMaster
   class Car
     def initialize(ip, port, joystick)
       @ip = ip

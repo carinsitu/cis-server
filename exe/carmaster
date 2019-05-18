@@ -2,4 +2,4 @@
 
 require 'carmaster'
 
-Carmaster::Master.new.run
+CarMaster::Master.new.run

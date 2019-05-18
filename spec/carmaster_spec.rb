@@ -1,6 +1,6 @@
-RSpec.describe Carmaster do
+RSpec.describe CarMaster do
   it 'has a version number' do
-    expect(Carmaster::VERSION).not_to be nil
+    expect(CarMaster::VERSION).not_to be nil
   end
 
   it 'does something useful' do
