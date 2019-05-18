@@ -61,7 +61,7 @@ module Carmaster
     end
 
     def create_car(joystick)
-      ip = '192.168.1.26'
+      ip = '192.168.37.169'
       port = 4210
       puts "Create a Car instance connected to #{ip}:#{port} with joystick: #{joystick}"
       @car = Car.new ip, port, joystick
