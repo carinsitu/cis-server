@@ -50,10 +50,7 @@ module Carmaster
 
   class Master
     def initialize
-      SDL2.init(SDL2::INIT_EVERYTHING)
-
-      window = SDL2::Window.create('testsprite', 0, 0, 640, 480, 0)
-      @renderer = window.create_renderer(-1, 0)
+      SDL2.init(SDL2::INIT_JOYSTICK)
 
       (0...SDL2::Joystick.num_connected_joysticks).each do |i|
         create_car i
@@ -78,7 +75,7 @@ module Carmaster
             @car.process_joystick_event event
           when SDL2::Event::JoyDeviceAdded
             p event
-            # create_car(event.which)
+            create_car(event.which)
           when SDL2::Event::JoyDeviceRemoved
             p event
           when SDL2::Event::KeyDown
@@ -88,7 +85,6 @@ module Carmaster
           end
         end
 
-        @renderer.present
         sleep 0.1
       end
     end
