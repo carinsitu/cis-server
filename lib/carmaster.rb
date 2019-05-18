@@ -1,4 +1,4 @@
-require "carmaster/version"
+require 'carmaster/version'
 require 'socket'
 require 'sdl2'
 
@@ -26,33 +26,33 @@ module Carmaster
     def process_joystick_event(ev)
       case ev.axis
       when 0
-        self.steering= ev.value
+        self.steering = ev.value
       when 2
-        @joystick_last_backward = -(ev.value + 32768)/2
-        if @joystick_last_forward == 0
-          self.throttle= @joystick_last_backward
-        else
-          self.throttle= 0
-        end
+        @joystick_last_backward = -(ev.value + 32_768) / 2
+        self.throttle = if @joystick_last_forward == 0
+                          @joystick_last_backward
+                        else
+                          0
+                        end
       when 5
-        @joystick_last_forward = (ev.value + 32768)/2
-        if @joystick_last_backward == 0
-          self.throttle= @joystick_last_forward
-        else
-          self.throttle= 0
-        end
+        @joystick_last_forward = (ev.value + 32_768) / 2
+        self.throttle = if @joystick_last_backward == 0
+                          @joystick_last_forward
+                        else
+                          0
+                        end
       end
     end
 
     def steering=(value)
       puts "#steering= #{value}"
-      data = [ 0x10, value ].pack('cs')
+      data = [0x10, value].pack('cs')
       send data
     end
 
     def throttle=(value)
       puts "#throttle= #{value}"
-      data = [ 0x11, value ].pack('cs')
+      data = [0x11, value].pack('cs')
       send data
     end
   end
@@ -61,7 +61,7 @@ module Carmaster
     def initialize
       SDL2.init(SDL2::INIT_EVERYTHING)
 
-      window = SDL2::Window.create("testsprite",0, 0, 640, 480, 0)
+      window = SDL2::Window.create('testsprite', 0, 0, 640, 480, 0)
       @renderer = window.create_renderer(-1, 0)
 
       (0...SDL2::Joystick.num_connected_joysticks).each do |i|
@@ -87,13 +87,11 @@ module Carmaster
             @car.process_joystick_event ev
           when SDL2::Event::JoyDeviceAdded
             p ev
-            #create_car(ev.which)
+            # create_car(ev.which)
           when SDL2::Event::JoyDeviceRemoved
             p ev
           when SDL2::Event::KeyDown
-            if ev.scancode == SDL2::Key::Scan::ESCAPE
-              exit
-            end
+            exit if ev.scancode == SDL2::Key::Scan::ESCAPE
           when SDL2::Event::Quit
             exit
           end
