@@ -23,24 +23,16 @@ module Carmaster
       @udp_socket.send(data, 0, @ip, @port)
     end
 
-    def process_joystick_event(ev)
-      case ev.axis
+    def process_joystick_event(event)
+      case event.axis
       when 0
-        self.steering = ev.value
+        self.steering = event.value
       when 2
-        @joystick_last_backward = -(ev.value + 32_768) / 2
-        self.throttle = if @joystick_last_forward == 0
-                          @joystick_last_backward
-                        else
-                          0
-                        end
+        @joystick_last_backward = -(event.value + 32_768) / 2
+        self.throttle = @joystick_last_forward.zero? ? @joystick_last_backward : 0
       when 5
-        @joystick_last_forward = (ev.value + 32_768) / 2
-        self.throttle = if @joystick_last_backward == 0
-                          @joystick_last_forward
-                        else
-                          0
-                        end
+        @joystick_last_forward = (event.value + 32_768) / 2
+        self.throttle = @joystick_last_backward.zero? ? @joystick_last_forward : 0
       end
     end
 
@@ -76,22 +68,22 @@ module Carmaster
       @car = Car.new ip, port, joystick
     end
 
-    def run
+    def run # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
       loop do
-        while ev = SDL2::Event.poll
-          case ev
+        while (event = SDL2::Event.poll)
+          case event
           when SDL2::Event::JoyButton
-            p ev
+            p event
           when SDL2::Event::JoyAxisMotion
-            p ev
-            @car.process_joystick_event ev
+            p event
+            @car.process_joystick_event event
           when SDL2::Event::JoyDeviceAdded
-            p ev
-            # create_car(ev.which)
+            p event
+            # create_car(event.which)
           when SDL2::Event::JoyDeviceRemoved
-            p ev
+            p event
           when SDL2::Event::KeyDown
-            exit if ev.scancode == SDL2::Key::Scan::ESCAPE
+            exit if event.scancode == SDL2::Key::Scan::ESCAPE
           when SDL2::Event::Quit
             exit
           end
