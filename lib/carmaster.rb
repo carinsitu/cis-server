@@ -19,7 +19,6 @@ module Carmaster
     end
 
     def send(data)
-      @udp_socket.send(data, 0, '192.168.1.35', @port)
       @udp_socket.send(data, 0, @ip, @port)
     end
 
