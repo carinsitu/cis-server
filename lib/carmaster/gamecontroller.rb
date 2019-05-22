@@ -17,13 +17,18 @@ module CarMaster
     def process_event(event)
       return if @car.nil?
 
-      case event.axis
-      when 0
-        @car.steering = event.value
-      when 2
-        @car.throttle = compute_throttle_from_backward_value(event.value)
-      when 5
-        @car.throttle = compute_throttle_from_forward_value(event.value)
+      case event
+      when SDL2::Event::JoyButton
+        puts event
+      when SDL2::Event::JoyAxisMotion
+        case event.axis
+        when 0
+          @car.steering = event.value
+        when 2
+          @car.throttle = compute_throttle_from_backward_value(event.value)
+        when 5
+          @car.throttle = compute_throttle_from_forward_value(event.value)
+        end
       end
     end
 
