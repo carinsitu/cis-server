@@ -15,7 +15,11 @@ module CarMaster
 
       @game_controllers = {}
 
-      @cars = [Car.new('192.168.37.169')]
+      @cars = [
+        Car.new('192.168.1.26'), # Got
+        Car.new('192.168.1.46'), # Manu
+        Car.new('192.168.1.44'), # Romu
+      ]
     end
 
     def run # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
