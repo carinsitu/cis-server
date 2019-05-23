@@ -33,7 +33,7 @@ module CarMaster
             p event
             game_controller = GameController.new(event.which)
             @game_controllers[event.which] = game_controller
-            game_controller.car = @cars.first
+            game_controller.car = @cars.pop
           when SDL2::Event::JoyDeviceRemoved
             p event
             @game_controllers[event.which] = nil
