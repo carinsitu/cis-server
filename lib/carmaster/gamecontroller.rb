@@ -19,7 +19,12 @@ module CarMaster
 
       case event
       when SDL2::Event::JoyButton
-        puts event
+        case event.button
+        when 4
+          @car.trim_steering(-1)
+        when 5
+          @car.trim_steering(1)
+        end
       when SDL2::Event::JoyAxisMotion
         case event.axis
         when 0

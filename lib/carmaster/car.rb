@@ -7,6 +7,7 @@ module CarMaster
     def initialize(ip)
       @ip = ip
       @udp_socket = UDPSocket.new
+      @trim_steering = 0
       puts "Car(#{@ip}) instanciated"
     end
 
@@ -24,6 +25,14 @@ module CarMaster
       puts "#throttle= #{value}"
       data = [0x11, value].pack('cs')
       send data
+    end
+
+    def trim_steering(value)
+      puts "#trim_steering= #{@trim_steering}"
+      @trim_steering += value
+      data = [0x20, @trim_steering].pack('cc')
+      send data
+      self.steering = 0
     end
   end
 end
