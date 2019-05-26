@@ -1,5 +1,6 @@
 require 'carmaster/version'
-require 'carmaster/car'
+
+require 'carmaster/carsmaster'
 require 'carmaster/gamecontroller'
 
 require 'sdl2'
@@ -15,15 +16,14 @@ module CarMaster
 
       @game_controllers = {}
 
-      @cars = [
-        Car.new('192.168.1.26'), # Got
-        Car.new('192.168.1.46'), # Manu
-        Car.new('192.168.1.44'), # Romu
-      ]
+      @cars_master = CarsMaster.new
+      @cars_master.request_discovery_on_lan
     end
 
     def run # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
       loop do
+        @cars_master.handle_udp_socket
+
         while (event = SDL2::Event.poll)
           case event
           when SDL2::Event::JoyAxisMotion, SDL2::Event::JoyButton
@@ -33,7 +33,7 @@ module CarMaster
             p event
             game_controller = GameController.new(event.which)
             @game_controllers[event.which] = game_controller
-            game_controller.car = @cars.pop
+            game_controller.car = @cars_master.cars.first.last
           when SDL2::Event::JoyDeviceRemoved
             p event
             @game_controllers[event.which] = nil
