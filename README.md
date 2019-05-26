@@ -13,3 +13,9 @@ bundle install --path vendor/bundle
 bundle exec exe/carmaster
 ```
 
+## Compatibility matrix
+
+| Feature          | CarNode version |
+|------------------|-----------------|
+| Dicovery         |           0.1.0 |
+| Trim on steering |           0.2.0 |
