@@ -26,7 +26,10 @@ module CarMaster
     end
 
     def register(ip)
-      @cars[ip] = Car.new ip if @cars[ip].nil?
+      return unless @cars[ip].nil?
+
+      @cars[ip] = Car.new ip
+      CarMaster::Master.instance.auto_pair @cars[ip]
     end
 
     def handle_udp_socket

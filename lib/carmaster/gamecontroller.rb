@@ -1,5 +1,7 @@
 module CarMaster
   class GameController
+    attr_reader :car
+
     def initialize(id)
       @id = id
 
