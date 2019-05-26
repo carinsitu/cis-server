@@ -22,6 +22,8 @@ module CarMaster
       case event
       when SDL2::Event::JoyButton
         case event.button
+        when 0
+          @car.throttle_factor = event.pressed ? 1.0 : 0.25
         when 4
           @car.trim_steering(-1)
         when 5
@@ -43,15 +45,11 @@ module CarMaster
 
     def compute_throttle_from_forward_value(axis_value)
       @last_forward_value = (axis_value + 32_768) / 2
-      # Reduce max speed
-      @last_forward_value /= 4
       @last_backward_value.zero? ? @last_forward_value : 0
     end
 
     def compute_throttle_from_backward_value(axis_value)
       @last_backward_value = -(axis_value + 32_768) / 2
-      # Reduce max speed
-      @last_backward_value /= 4
       @last_forward_value.zero? ? @last_backward_value : 0
     end
   end
