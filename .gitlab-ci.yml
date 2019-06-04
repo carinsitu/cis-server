@@ -1,0 +1,39 @@
+---
+image: registry.opus-codium.fr/image-builder/docker-image-builder:opuscodium-image
+
+before_script:
+  - apt update
+  - apt install libsdl2-dev --assume-yes
+
+stages:
+  - build
+  - test
+
+bundle/test:
+  stage: build
+  cache:
+    untracked: true
+    paths:
+      - 'vendor/'
+  artifacts:
+    untracked: true
+    expire_in: 1 hour
+    paths:
+      - 'vendor/'
+  script:
+    - bundle install --jobs $(nproc) --path='vendor/bundle'
+
+
+test/unit:
+  stage: test
+  script:
+    - bundle exec rspec
+  dependencies:
+    - bundle/test
+
+test/rubocop:
+  stage: test
+  script:
+    - bundle exec rubocop --display-style-guide
+  dependencies:
+    - bundle/test
