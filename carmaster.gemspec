@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'ruby-sdl2', '~> 0.3.4'
   spec.add_dependency 'mqtt', '~> 0.5.0'
-  spec.add_development_dependency 'bundler', '~> 1.17'
+  spec.add_development_dependency 'bundler', '~> 1.13'
   spec.add_development_dependency 'byebug', '~> 11.0'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
