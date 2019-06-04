@@ -38,12 +38,18 @@ module CisServer
 
     def handle_udp_socket
       response = @cars_udp_socket.recvfrom_nonblock 256
-      if response[0][0] == "\x01"
+      ip = response[1][3]
+      command = response[0].unpack('C')[0]
+      case command
+      when 0x01
         # discovery
         data = response[0].unpack 'ccccc'
-        ip = response[1][3]
         puts "New car discovered: IP: #{ip}, version #{data[2]}.#{data[3]}.#{data[4]}"
         register ip
+      when 0x80
+        # RSSI
+        data = response[0].unpack 'cl'
+        puts "RSSI: #{data[1]}"
       else
         puts "Dropped: #{response}"
       end
