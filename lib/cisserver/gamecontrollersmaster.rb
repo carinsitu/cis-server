@@ -14,12 +14,18 @@ module CisServer
       @sdl_next_instance_id = 0
     end
 
+    def on_register(closure)
+      @register_closure = closure
+    end
+
     def register(sdl_device_id)
       game_controller = GameController.new(sdl_device_id)
       @game_controllers[@sdl_next_instance_id] = game_controller
       puts "Game controller registered: device_id=#{sdl_device_id} instance_id=#{@sdl_next_instance_id}"
       @sdl_next_instance_id += 1
-      CisServer::Master.instance.auto_pair game_controller
+      @register_closure.call game_controller
+    rescue GameController::DeviceNotSupported
+      puts 'Nope!'
     end
 
     def unregister(instance_id)

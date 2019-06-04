@@ -1,14 +1,22 @@
 module CisServer
   class GameController
-    attr_reader :car
+    class DeviceNotSupported < StandardError; end
 
     def initialize(id)
+      @closures = {
+        throttle: -> {},
+        steering: -> {},
+        boost: -> {},
+      }
       @id = id
 
       @joystick = SDL2::Joystick.open(@id)
+      raise DeviceNotSupported unless @joystick.GUID == '030000006d0400001dc2000014400000'
 
       @last_forward_value = 0
       @last_backward_value = 0
+
+      puts "Initialized #{@joystick.name} (#{@joystick.GUID})"
     end
 
     def car=(car)
@@ -17,8 +25,6 @@ module CisServer
     end
 
     def process_event(event)
-      return if @car.nil?
-
       case event
       when SDL2::Event::JoyButton
         handle_button_event event
@@ -27,12 +33,24 @@ module CisServer
       end
     end
 
+    def on_throttle(closure)
+      @closures[:throttle] = closure
+    end
+
+    def on_steering(closure)
+      @closures[:steering] = closure
+    end
+
+    def on_boost(closure)
+      @closures[:boost] = closure
+    end
+
     private
 
     def handle_button_event(event)
       case event.button
       when 0
-        @car.throttle_factor = event.pressed ? 1.0 : 0.25
+        @closures[:boost].call event.pressed
       when 4
         @car.trim_steering(-1)
       when 5
@@ -43,11 +61,11 @@ module CisServer
     def handle_axis_event(event)
       case event.axis
       when 0
-        @car.steering = event.value
+        @closures[:steering].call event.value
       when 2
-        @car.throttle = compute_throttle_from_backward_value(event.value)
+        @closures[:throttle].call compute_throttle_from_backward_value(event.value)
       when 5
-        @car.throttle = compute_throttle_from_forward_value(event.value)
+        @closures[:throttle].call compute_throttle_from_forward_value(event.value)
       end
     end
 

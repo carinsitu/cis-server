@@ -29,7 +29,11 @@ module CisServer
       return unless @cars[ip].nil?
 
       @cars[ip] = Car.new ip
-      CisServer::Master.instance.auto_pair @cars[ip]
+      @register_closure.call @cars[ip]
+    end
+
+    def on_register(closure)
+      @register_closure = closure
     end
 
     def handle_udp_socket

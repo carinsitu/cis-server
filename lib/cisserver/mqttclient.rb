@@ -7,7 +7,7 @@ module CisServer
 
     attr_reader :mqtt
 
-    def connect
+    def initialize
       @mqtt = MQTT::Client.connect('localhost')
     end
   end
