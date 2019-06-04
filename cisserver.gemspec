@@ -1,10 +1,10 @@
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'carmaster/version'
+require 'cisserver/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'carmaster'
-  spec.version       = CarMaster::VERSION
+  spec.name          = 'cisserver'
+  spec.version       = CisServer::VERSION
   spec.authors       = ['Romuald Conty']
   spec.email         = ['romuald@opus-codium.fr']
 

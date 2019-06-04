@@ -1,6 +1,6 @@
-require 'carmaster/car'
+require 'cisserver/car'
 
-module CarMaster
+module CisServer
   class CarsMaster
     attr_reader :cars
 
@@ -29,7 +29,7 @@ module CarMaster
       return unless @cars[ip].nil?
 
       @cars[ip] = Car.new ip
-      CarMaster::Master.instance.auto_pair @cars[ip]
+      CisServer::Master.instance.auto_pair @cars[ip]
     end
 
     def handle_udp_socket

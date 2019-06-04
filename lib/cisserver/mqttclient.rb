@@ -1,7 +1,7 @@
 require 'mqtt'
 require 'singleton'
 
-module CarMaster
+module CisServer
   class MqttClient
     include Singleton
 

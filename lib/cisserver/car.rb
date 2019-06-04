@@ -1,6 +1,6 @@
 require 'socket'
 
-module CarMaster
+module CisServer
   class Car
     attr_reader :ip
 

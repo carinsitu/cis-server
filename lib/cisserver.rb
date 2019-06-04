@@ -1,13 +1,13 @@
-require 'carmaster/version'
+require 'cisserver/version'
 
-require 'carmaster/carsmaster'
-require 'carmaster/gamecontrollersmaster'
+require 'cisserver/carsmaster'
+require 'cisserver/gamecontrollersmaster'
 
 require 'byebug'
 
 require 'singleton'
 
-module CarMaster
+module CisServer
   class Error < StandardError; end
 
   class Master

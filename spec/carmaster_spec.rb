@@ -1,6 +1,6 @@
-RSpec.describe CarMaster do
+RSpec.describe CisServer do
   it 'has a version number' do
-    expect(CarMaster::VERSION).not_to be nil
+    expect(CisServer::VERSION).not_to be nil
   end
 
   it 'does something useful' do

@@ -1,8 +1,8 @@
-require 'carmaster/gamecontroller'
+require 'cisserver/gamecontroller'
 
 require 'sdl2'
 
-module CarMaster
+module CisServer
   class GameControllersMaster
     attr_reader :game_controllers
 
@@ -19,7 +19,7 @@ module CarMaster
       @game_controllers[@sdl_next_instance_id] = game_controller
       puts "Game controller registered: device_id=#{sdl_device_id} instance_id=#{@sdl_next_instance_id}"
       @sdl_next_instance_id += 1
-      CarMaster::Master.instance.auto_pair game_controller
+      CisServer::Master.instance.auto_pair game_controller
     end
 
     def unregister(instance_id)

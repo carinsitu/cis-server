@@ -1,5 +1,5 @@
 require 'bundler/setup'
-require 'carmaster'
+require 'cisserver'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

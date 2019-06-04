@@ -10,7 +10,7 @@ bundle install --path vendor/bundle
 ## Usage
 
 ```
-bundle exec exe/carmaster
+bundle exec exe/cisserver
 ```
 
 ## Compatibility matrix

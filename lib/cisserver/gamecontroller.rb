@@ -1,4 +1,4 @@
-module CarMaster
+module CisServer
   class GameController
     attr_reader :car
 
