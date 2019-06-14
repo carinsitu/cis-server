@@ -5,8 +5,23 @@ module CisServer
     attr_reader :controller
     attr_reader :car
 
+    VIDEO_CHANNEL_FOR_ID = {
+      # TODO: Find the right channels for each cockpit and hardcode them here
+      0 => 9,
+      1 => 19,
+      2 => 29,
+      3 => 39,
+    }.freeze
+
+    def initialize(id)
+      @id = id
+    end
+
     def car=(car)
       @car = car
+
+      @car.video_channel = VIDEO_CHANNEL_FOR_ID[@id]
+
       pair_devices unless @controller.nil?
     end
 

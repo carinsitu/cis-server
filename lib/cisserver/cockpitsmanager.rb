@@ -9,7 +9,9 @@ module CisServer
       @cars_master.on_register ->(device) { auto_pair device }
 
       @cockpits = []
-      4.times { @cockpits.push(Cockpit.new) }
+      4.times do |i|
+        @cockpits.push(Cockpit.new(i))
+      end
     end
 
     def auto_pair(device)

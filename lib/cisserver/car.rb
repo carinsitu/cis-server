@@ -45,5 +45,11 @@ module CisServer
       @throttle_factor = value
       self.throttle = @throttle_raw
     end
+
+    def video_channel=(value)
+      puts "#video_channel= #{value}"
+      data = [0x05, value].pack('cc')
+      send_data data
+    end
   end
 end
