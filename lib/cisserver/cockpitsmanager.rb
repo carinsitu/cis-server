@@ -2,11 +2,11 @@ require 'cisserver/cockpit'
 
 module CisServer
   class CockpitsManager
-    def initialize(cars_master, game_controllers_master)
-      @cars_master = cars_master
+    def initialize(cars_manager, game_controllers_master)
+      @cars_manager = cars_manager
       @game_controllers_master = game_controllers_master
       @game_controllers_master.on_register ->(device) { auto_pair device }
-      @cars_master.on_register ->(device) { auto_pair device }
+      @cars_manager.on_register ->(device) { auto_pair device }
 
       @cockpits = []
       4.times do |i|
@@ -38,7 +38,7 @@ module CisServer
     end
 
     def find_available_car
-      cars = @cars_master.cars.map { |_key, value| value }
+      cars = @cars_manager.cars.map { |_key, value| value }
       paired_cars = @game_controllers_master.game_controllers.map { |_key, value| value.car }
       unpaired_cars = cars - paired_cars
 

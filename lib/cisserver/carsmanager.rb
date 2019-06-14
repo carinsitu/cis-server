@@ -1,7 +1,7 @@
 require 'cisserver/car'
 
 module CisServer
-  class CarsMaster
+  class CarsManager
     attr_reader :cars
 
     def initialize

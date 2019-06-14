@@ -1,6 +1,6 @@
 require 'cisserver/version'
 
-require 'cisserver/carsmaster'
+require 'cisserver/carsmanager'
 require 'cisserver/cockpitsmanager'
 require 'cisserver/gamecontrollersmaster'
 
@@ -15,17 +15,17 @@ module CisServer
     include Singleton
 
     def initialize
-      @cars_master = CarsMaster.new
-      @cars_master.request_discovery_on_lan
+      @cars_manager = CarsManager.new
+      @cars_manager.request_discovery_on_lan
 
       @game_controllers_master = GameControllersMaster.new
 
-      @cockpit_manager = CockpitsManager.new @cars_master, @game_controllers_master
+      @cockpit_manager = CockpitsManager.new @cars_manager, @game_controllers_master
     end
 
     def run
       loop do
-        @cars_master.handle_udp_socket
+        @cars_manager.handle_udp_socket
         @game_controllers_master.process_sdl_events
 
         sleep 0.001
