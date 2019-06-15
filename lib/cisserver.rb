@@ -7,6 +7,7 @@ require 'cisserver/gamecontrollersmanager'
 require 'byebug'
 
 require 'singleton'
+require 'mqtt'
 
 module CisServer
   class Error < StandardError; end
@@ -15,6 +16,7 @@ module CisServer
     include Singleton
 
     def initialize
+      @mqtt = MQTT::Client.connect('localhost')
       @cars_manager = CarsManager.new
       @cars_manager.request_discovery_on_lan
 
@@ -30,6 +32,10 @@ module CisServer
 
         sleep 0.001
       end
+    end
+
+    def announce(topic, message)
+      @mqtt.publish "carinsitu/#{topic}", message
     end
   end
 end

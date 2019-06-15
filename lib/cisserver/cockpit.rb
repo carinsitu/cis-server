@@ -1,4 +1,4 @@
-require 'cisserver/mqttclient'
+require 'cisserver'
 
 module CisServer
   class Cockpit
@@ -33,13 +33,13 @@ module CisServer
     def pair_devices
       @controller.on_throttle lambda { |throttle|
         @car.throttle = throttle
-        MqttClient.instance.mqtt.publish "carinsitu/cockpit/#{@id}/car/throttle", throttle.to_s
+        Master.instance.announce "cockpit/#{@id}/car/throttle", throttle.to_s
       }
       @controller.on_steering ->(steering) { @car.steering = steering }
       @controller.on_boost ->(boost) { @car.throttle_factor = boost ? 1.0 : 0.25 }
 
       @car.on_rssi lambda { |rssi|
-        MqttClient.instance.mqtt.publish "carinsitu/cockpit/#{@id}/car/rssi", rssi
+        Master.instance.announce "cockpit/#{@id}/car/rssi", rssi
       }
     end
   end
