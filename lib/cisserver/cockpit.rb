@@ -33,7 +33,7 @@ module CisServer
     def pair_devices
       @controller.on_throttle lambda { |throttle|
         @car.throttle = throttle
-        MqttClient.instance.mqtt.publish 'carinsitu/cockpit/0/car/throttle', throttle.to_s
+        MqttClient.instance.mqtt.publish "carinsitu/cockpit/#{@id}/car/throttle", throttle.to_s
       }
       @controller.on_steering ->(steering) { @car.steering = steering }
       @controller.on_boost ->(boost) { @car.throttle_factor = boost ? 1.0 : 0.25 }
