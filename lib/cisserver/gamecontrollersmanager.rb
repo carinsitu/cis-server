@@ -3,7 +3,7 @@ require 'cisserver/gamecontroller'
 require 'sdl2'
 
 module CisServer
-  class GameControllersMaster
+  class GameControllersManager
     attr_reader :game_controllers
 
     def initialize
