@@ -31,6 +31,7 @@ module CisServer
     end
 
     def pair_devices
+      # Controller setup
       @controller.on_throttle lambda { |throttle|
         @car.throttle = throttle
         Master.instance.announce "cockpit/#{@id}/car/throttle", throttle.to_s
@@ -38,8 +39,12 @@ module CisServer
       @controller.on_steering ->(steering) { @car.steering = steering }
       @controller.on_boost ->(boost) { @car.throttle_factor = boost ? 1.0 : 0.25 }
 
+      # Car setup
       @car.on_rssi lambda { |rssi|
         Master.instance.announce "cockpit/#{@id}/car/rssi", rssi
+      }
+      @car.on_ir lambda { |code|
+        puts "Cockpit #{@id}: IR: #{code}"
       }
     end
   end
