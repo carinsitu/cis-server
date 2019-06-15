@@ -46,12 +46,8 @@ module CisServer
         data = response[0].unpack 'ccccc'
         puts "New car discovered: IP: #{ip}, version #{data[2]}.#{data[3]}.#{data[4]}"
         register ip
-      when 0x80
-        # RSSI
-        data = response[0].unpack 'cl'
-        puts "RSSI: #{data[1]}"
       else
-        puts "Dropped: #{response}"
+        @cars[ip]&.handle_udp_message(command, response[0])
       end
     rescue IO::WaitReadable # rubocop:disable Lint/HandleExceptions
     end

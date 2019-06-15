@@ -51,5 +51,16 @@ module CisServer
       data = [0x05, value].pack('cc')
       send_data data
     end
+
+    def handle_udp_message(command, data)
+      case command
+      when 0x80
+        # RSSI
+        data = data.unpack 'cl'
+        puts "RSSI: #{data[1]}"
+      else
+        puts "Car #{@ip}: Dropped message #{data}"
+      end
+    end
   end
 end
