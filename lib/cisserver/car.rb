@@ -56,11 +56,19 @@ module CisServer
       case command
       when 0x80
         # RSSI
-        data = data.unpack 'cl'
-        puts "RSSI: #{data[1]}"
+        self.rssi = data.unpack('cl')[1]
       else
         puts "Car #{@ip}: Dropped message #{data}"
       end
+    end
+
+    def rssi=(value)
+      @on_rssi_closure.call value
+      @rssi = value
+    end
+
+    def on_rssi(closure)
+      @on_rssi_closure = closure
     end
   end
 end
