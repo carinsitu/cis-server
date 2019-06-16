@@ -25,3 +25,6 @@ mosquitto_sub -t 'carinsitu/#' -v
 |------------------|-----------------|
 | Dicovery         |           0.1.0 |
 | Trim on steering |           0.2.0 |
+| RSSI             |           0.3.0 |
+| SmartAudio       |           0.4.0 |
+| IR               |           0.4.0 |
