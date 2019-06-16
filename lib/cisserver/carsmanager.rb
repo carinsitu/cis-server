@@ -36,7 +36,7 @@ module CisServer
       @register_closure = closure
     end
 
-    def handle_udp_socket
+    def handle_udp_socket # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
       response = @cars_udp_socket.recvfrom_nonblock 256
       ip = response[1][3]
       command = response[0].unpack('C')[0]
