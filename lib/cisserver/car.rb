@@ -3,6 +3,7 @@ require 'socket'
 module CisServer
   class Car
     attr_reader :ip
+    attr_reader :rssi
 
     def initialize(ip)
       @ip = ip

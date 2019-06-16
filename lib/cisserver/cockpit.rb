@@ -41,7 +41,7 @@ module CisServer
 
       # Car setup
       @car.on_rssi lambda { |rssi|
-        Master.instance.announce "cockpit/#{@id}/car/rssi", rssi
+        Master.instance.announce "cockpit/#{@id}/car/rssi", rssi unless @car.rssi == rssi
       }
       @car.on_ir lambda { |code|
         puts "Cockpit #{@id}: IR: #{code}"
