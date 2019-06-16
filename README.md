@@ -13,6 +13,12 @@ bundle install --path vendor/bundle
 bundle exec exe/cisserver
 ```
 
+## Snipets
+
+```
+mosquitto_sub -t 'carinsitu/#' -v
+```
+
 ## Compatibility matrix
 
 | Feature          | CarNode version |
