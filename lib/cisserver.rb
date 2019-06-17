@@ -27,11 +27,14 @@ module CisServer
 
     def run
       loop do
-        @cars_manager.handle_udp_socket
-        @game_controllers_manager.process_sdl_events
-
+        process_inputs
         sleep 0.001
       end
+    end
+
+    def process_inputs
+      @cars_manager.handle_udp_socket
+      @game_controllers_manager.process_sdl_events
     end
 
     def announce(topic, message)
