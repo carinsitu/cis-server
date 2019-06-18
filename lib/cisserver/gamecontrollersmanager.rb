@@ -34,15 +34,15 @@ module CisServer
     end
 
     def process_sdl_events
-      while (event = SDL2::Event.poll)
-        case event
-        when SDL2::Event::JoyAxisMotion, SDL2::Event::JoyButton
-          @game_controllers[event.which].process_event event
-        when SDL2::Event::JoyDeviceAdded
-          register event.which
-        when SDL2::Event::JoyDeviceRemoved
-          unregister event.which
-        end
+      return unless (event = SDL2::Event.poll)
+
+      case event
+      when SDL2::Event::JoyAxisMotion, SDL2::Event::JoyButton
+        @game_controllers[event.which].process_event event
+      when SDL2::Event::JoyDeviceAdded
+        register event.which
+      when SDL2::Event::JoyDeviceRemoved
+        unregister event.which
       end
     end
   end
