@@ -5,6 +5,9 @@ module CisServer
     attr_reader :ip
     attr_reader :rssi
 
+    attr_writer :on_rssi
+    attr_writer :on_ir
+
     def initialize(ip)
       @ip = ip
       @udp_socket = UDPSocket.new
@@ -12,6 +15,9 @@ module CisServer
 
       @throttle_factor = 0.25
       @throttle_raw = 0
+
+      @on_rssi = -> {}
+      @on_ir = -> {}
 
       puts "Car(#{@ip}) instanciated"
     end
@@ -67,16 +73,8 @@ module CisServer
     end
 
     def rssi=(value)
-      @on_rssi_closure.call value
+      @on_rssi.call value
       @rssi = value
-    end
-
-    def on_rssi(closure)
-      @on_rssi_closure = closure
-    end
-
-    def on_ir(closure)
-      @on_ir_closure = closure
     end
   end
 end
