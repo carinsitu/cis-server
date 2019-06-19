@@ -43,7 +43,7 @@ module CisServer
       case command
       when 0x01
         # discovery
-        data = response[0].unpack 'ccccc'
+        data = response[0].unpack 'CCCCC'
         puts "New car discovered: IP: #{ip}, version #{data[2]}.#{data[3]}.#{data[4]}"
         register ip
       else
