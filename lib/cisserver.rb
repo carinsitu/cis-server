@@ -6,17 +6,15 @@ require 'cisserver/gamecontrollersmanager'
 
 require 'byebug'
 
-require 'singleton'
 require 'mqtt'
 
 module CisServer
   class Error < StandardError; end
 
   class Master
-    include Singleton
-
     def initialize
-      @mqtt = MQTT::Client.connect('localhost')
+      @@mqtt ||= MQTT::Client.connect('localhost') # rubocop:disable Style/ClassVars
+
       @cars_manager = CarsManager.new
       @cars_manager.request_discovery_on_lan
 
@@ -37,8 +35,8 @@ module CisServer
       @game_controllers_manager.process_sdl_events
     end
 
-    def announce(topic, message)
-      @mqtt.publish "carinsitu/#{topic}", message
+    def self.announce(topic, message)
+      @@mqtt.publish "carinsitu/#{topic}", message
     end
   end
 end

@@ -40,7 +40,7 @@ module CisServer
     def setup_controller
       @controller.on_throttle = lambda { |throttle|
         @car.throttle = throttle
-        Master.instance.announce "cockpit/#{@id}/car/throttle", throttle.to_s
+        Master.announce "cockpit/#{@id}/car/throttle", throttle.to_s
       }
       @controller.on_steering = ->(steering) { @car.steering = steering }
       @controller.on_boost = ->(boost) { @car.throttle_factor = boost ? 1.0 : 0.25 }
@@ -48,7 +48,7 @@ module CisServer
 
     def setup_car
       @car.on_rssi = lambda { |rssi|
-        Master.instance.announce "cockpit/#{@id}/car/rssi", rssi unless @car.rssi == rssi
+        Master.announce "cockpit/#{@id}/car/rssi", rssi unless @car.rssi == rssi
       }
       @car.on_ir = lambda { |code|
         puts "Cockpit #{@id}: IR: #{code}"

@@ -2,4 +2,4 @@
 
 require 'cisserver'
 
-CisServer::Master.instance.run
+CisServer::Master.new.run
