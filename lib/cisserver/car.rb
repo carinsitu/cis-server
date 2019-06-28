@@ -40,7 +40,7 @@ module CisServer
       send_data data
     end
 
-    def trim_steering(value)
+    def trim_steering=(value)
       puts "#trim_steering= #{@trim_steering}"
       @trim_steering += value
       data = [0x20, @trim_steering].pack('cc')

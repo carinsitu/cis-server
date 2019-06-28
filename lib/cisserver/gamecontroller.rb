@@ -5,7 +5,7 @@ module CisServer
     attr_writer :on_throttle
     attr_writer :on_steering
     attr_writer :on_boost
-    attr_writer :trim_steering
+    attr_writer :on_trim_steering
 
     def initialize(id)
       @id = id
