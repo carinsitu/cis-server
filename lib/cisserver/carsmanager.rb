@@ -4,6 +4,8 @@ module CisServer
   class CarsManager
     attr_reader :cars
 
+    attr_writer :on_register
+
     def initialize
       @cars_udp_socket = UDPSocket.new
       @cars_udp_socket.bind '0.0.0.0', 4200
@@ -29,11 +31,7 @@ module CisServer
       return unless @cars[ip].nil?
 
       @cars[ip] = Car.new ip
-      @register_closure.call @cars[ip]
-    end
-
-    def on_register(closure)
-      @register_closure = closure
+      @on_register.call @cars[ip]
     end
 
     def handle_udp_socket # rubocop:disable Metrics/AbcSize,Metrics/MethodLength

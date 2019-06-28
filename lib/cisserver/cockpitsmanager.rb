@@ -5,8 +5,8 @@ module CisServer
     def initialize(cars_manager, game_controllers_manager)
       @cars_manager = cars_manager
       @game_controllers_manager = game_controllers_manager
-      @game_controllers_manager.on_register ->(device) { auto_pair device }
-      @cars_manager.on_register ->(device) { auto_pair device }
+      @game_controllers_manager.on_register = ->(device) { auto_pair device }
+      @cars_manager.on_register = ->(device) { auto_pair device }
 
       @cockpits = []
       4.times do |i|
