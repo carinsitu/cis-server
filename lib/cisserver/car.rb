@@ -64,7 +64,7 @@ module CisServer
       when 0x80
         # RSSI
         self.rssi = data.unpack('cl')[1]
-      when 0x01
+      when 0x81
         # IR
         @on_ir_closure.call data.unpack('cQ')[1]
       else
