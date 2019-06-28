@@ -66,7 +66,7 @@ module CisServer
         self.rssi = data.unpack('cl')[1]
       when 0x81
         # IR
-        @on_ir_closure.call data.unpack('cQ')[1]
+        @on_ir.call data.unpack('cQ')[1]
       else
         puts "Car #{@ip}: Dropped message #{data}"
       end
