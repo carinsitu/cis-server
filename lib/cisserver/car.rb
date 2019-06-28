@@ -16,8 +16,8 @@ module CisServer
       @throttle_factor = 0.25
       @throttle_raw = 0
 
-      @on_rssi = -> {}
-      @on_ir = -> {}
+      @on_rssi = ->(rssi) {}
+      @on_ir = ->(ir) {}
 
       puts "Car(#{@ip}) instanciated"
     end
