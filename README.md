@@ -27,4 +27,5 @@ mosquitto_sub -t 'carinsitu/#' -v
 | Trim on steering |           0.2.0 |
 | RSSI             |           0.3.0 |
 | SmartAudio       |           0.4.0 |
-| IR               |           0.4.0 |
+| IR               |           0.4.1 |
+| VTX Channel      |           0.5.0 |
