@@ -55,7 +55,7 @@ module CisServer
 
     def video_channel=(value)
       puts "#video_channel= #{value}"
-      data = [0x05, value].pack('cc')
+      data = [0x05, value].pack('cC')
       send_data data
     end
 
