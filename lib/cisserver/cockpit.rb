@@ -6,11 +6,10 @@ module CisServer
     attr_reader :car
 
     VIDEO_CHANNEL_FOR_ID = {
-      # TODO: Find the right channels for each cockpit and hardcode them here
-      0 => 9,
-      1 => 19,
-      2 => 29,
-      3 => 39,
+      0 => 33, # Raceband, Channel 2
+      1 => 34, # Raceband, Channel 3
+      2 => 35, # Raceband, Channel 4
+      3 => 36, # Raceband, Channel 5
     }.freeze
 
     def initialize(id)
