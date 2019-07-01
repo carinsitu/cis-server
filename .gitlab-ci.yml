@@ -3,7 +3,7 @@ image: registry.opus-codium.fr/image-builder/docker-image-builder:opuscodium-ima
 
 before_script:
   - apt update
-  - apt install libsdl2-dev --assume-yes
+  - apt install libsdl2-dev libavahi-compat-libdnssd-dev --assume-yes
 
 stages:
   - build
