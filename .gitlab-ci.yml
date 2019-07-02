@@ -27,7 +27,7 @@ bundle/test:
 test/unit:
   stage: test
   script:
-    - bundle exec rspec
+    - CI=1 bundle exec rspec
   dependencies:
     - bundle/test
 

@@ -15,4 +15,10 @@ RSpec.configure do |config|
   config.formatter = :documentation
   config.filter_run focus: true
   config.run_all_when_everything_filtered = true
+
+  if ENV['CI']
+    config.before(:example, :focus) do
+      raise 'This example was committed with `:focus` and should not have been'
+    end
+  end
 end
