@@ -18,7 +18,7 @@ RSpec.describe CisServer::Master do
 
   let(:master) { CisServer::Master.new }
 
-  it 'can be instanciated' do
+  it 'can be instantiated' do
     expect(master).to be_instance_of CisServer::Master
   end
 
@@ -27,9 +27,9 @@ RSpec.describe CisServer::Master do
     let(:car) { CisMocks::EmulatedCar.new master }
 
     before do
-      # Instanciate emulated car
+      # Instantiate emulated car
       car
-      # Instanciate emulated gamepad
+      # Instantiate emulated gamepad
       gamepad
     end
 
