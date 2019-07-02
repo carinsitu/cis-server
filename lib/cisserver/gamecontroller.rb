@@ -58,11 +58,13 @@ module CisServer
     end
 
     def compute_throttle_from_forward_value(axis_value)
+      # Compensate the trigger's "zero" which is at -32767
       @last_forward_value = (axis_value + 32_768) / 2
       @last_backward_value.zero? ? @last_forward_value : 0
     end
 
     def compute_throttle_from_backward_value(axis_value)
+      # Compensate the trigger's "zero" which is at -32767
       @last_backward_value = -(axis_value + 32_768) / 2
       @last_forward_value.zero? ? @last_backward_value : 0
     end
