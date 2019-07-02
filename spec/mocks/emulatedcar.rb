@@ -1,17 +1,37 @@
 module CisMocks
   class EmulatedCar
-    include RSpec::Mocks::ExampleMethods
-    def initialize(master)
-      @master = master
+    def initialize
+      @endpoint = Async::IO::Endpoint.parse('tcp://127.0.0.1:4200')
+    end
 
-      allow(CisMocks.udp_instance).to receive(:recvfrom_nonblock) do
-        [[0x01, 0x01, 0x00, 0x00, 0x00].pack('CCCCC'), [nil, nil, nil, '127.0.0.1']]
+    def connect
+      Async.logger.debug "#{self}: Connecting..."
+      @socket = @endpoint.connect
+      Async.logger.debug "#{self}: Connected"
+    end
+
+    def reply_to_commands
+      Async do
+        loop do
+          case read_command
+          when CisServer::Network::Protocol::VERSION_GET
+            @socket.write([CisServer::Network::Protocol::VERSION_GET, 0x00, 0xff, 0xaa, 0x00].pack('C*'))
+          else
+            raise "Command not supported: #{command}, #{CisServer::Network::Protocol::VERSION_GET}"
+          end
+        end
       end
+    end
 
-      # Processing inputs should detect a new car
-      @master.process_inputs
+    def disconnect
+      @socket&.close
+    end
 
-      allow(CisMocks.udp_instance).to receive(:recvfrom_nonblock).and_raise(StandardError.new.extend(IO::WaitReadable))
+    private
+
+    def read_command
+      command = @socket.read(1)
+      command.unpack('C')[0]
     end
   end
 end

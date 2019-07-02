@@ -55,7 +55,7 @@ module CisServer
         Master.announce "cockpit/#{@id}/car/rssi", rssi unless @car.rssi == rssi
       }
       @car.on_ir = lambda { |code|
-        puts "Cockpit #{@id}: IR: #{code}"
+        Async.logger.debug "IRCODE: #{code}"
       }
     end
 

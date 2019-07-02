@@ -1,5 +1,3 @@
-require 'ostruct'
-
 require 'mocks/cismocks'
 require 'mocks/emulatedcar'
 require 'mocks/emulatedgamepad'
@@ -16,7 +14,7 @@ RSpec.describe CisServer::Master do
     CisMocks.setup
   end
 
-  let(:master) { CisServer::Master.new }
+  let(:master) { CisServer::Master.new '127.0.0.1' }
 
   it 'can be instantiated' do
     expect(master).to be_instance_of CisServer::Master

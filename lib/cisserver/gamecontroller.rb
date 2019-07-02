@@ -21,7 +21,7 @@ module CisServer
       @last_forward_value = 0
       @last_backward_value = 0
 
-      puts "Initialized #{@joystick.name} (#{@joystick.GUID})"
+      Async.logger.debug "GameController initialized: #{@joystick.name} (#{@joystick.GUID})"
     end
 
     def process_event(event)

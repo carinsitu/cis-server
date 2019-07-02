@@ -20,6 +20,7 @@ Style/TrailingCommaInHashLiteral:
 
 Metrics/BlockLength:
   Exclude:
+    - '*.gemspec'
     - 'spec/**/*'
 
 Lint/AmbiguousBlockAssociation:
@@ -29,3 +30,7 @@ Lint/AmbiguousBlockAssociation:
 Naming/AsciiIdentifiers:
   Exclude:
     - 'features/step_definitions/**/*'
+
+Style/ClassVars:
+  Exclude:
+    - 'spec/mocks/cismocks.rb'

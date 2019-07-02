@@ -21,6 +21,8 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
+  spec.add_dependency 'async-io', '~> 1.23.3'
+  spec.add_dependency 'async-rspec', '~> 1.12.2'
   spec.add_dependency 'dnssd', '~> 3.0.1'
   spec.add_dependency 'mqtt', '~> 0.5.0'
   spec.add_dependency 'ruby-sdl2', '~> 0.3.4'

@@ -15,8 +15,7 @@ module CisMocks
         joystick
       end
 
-      # Processing inputs should detect a new "Logitech GamePad"
-      @master.process_inputs
+      process
     end
 
     def move(axis, value)
@@ -27,8 +26,14 @@ module CisMocks
         axis_event
       end
 
-      # Processing inputs should detect an event on right trigger
-      @master.process_inputs
+      process
+    end
+
+    private
+
+    def process
+      @gm = @master.instance_variable_get :@game_controllers_manager
+      @gm.send :process_sdl_events
     end
   end
 end

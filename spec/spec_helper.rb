@@ -3,6 +3,7 @@ SimpleCov.start
 
 require 'bundler/setup'
 require 'cisserver'
+require 'async/rspec/reactor'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

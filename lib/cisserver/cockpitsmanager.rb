@@ -6,7 +6,9 @@ module CisServer
       @cars_manager = cars_manager
       @game_controllers_manager = game_controllers_manager
       @game_controllers_manager.on_register = ->(device) { auto_pair device }
+
       @cars_manager.on_register = ->(device) { auto_pair device }
+      @cars_manager.on_deregister = ->(device) { deregister device }
 
       @cockpits = []
       4.times do |i|
@@ -45,6 +47,11 @@ module CisServer
       return nil if unpaired_cars.empty?
 
       unpaired_cars.first
+    end
+
+    def deregister
+      # TODO: Implement me
+      raise 'Not implemented'
     end
   end
 end

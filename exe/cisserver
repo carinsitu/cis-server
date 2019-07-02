@@ -2,9 +2,6 @@
 
 require 'cisserver'
 
-require 'dnssd'
-
-cis_tcp_server = TCPServer.new 4200
-DNSSD.announce cis_tcp_server, 'Car In Situ server', 'cisserver'
-
-CisServer::Master.new.run
+Async do |task|
+  CisServer::Master.new.run(task)
+end

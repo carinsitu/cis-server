@@ -19,17 +19,28 @@ module CisServer
     def register(sdl_device_id)
       game_controller = GameController.new(sdl_device_id)
       @game_controllers[@sdl_next_instance_id] = game_controller
-      puts "Game controller registered: device_id=#{sdl_device_id} instance_id=#{@sdl_next_instance_id}"
+      Async.logger.debug "Game controller registered: device_id=#{sdl_device_id} instance_id=#{@sdl_next_instance_id}"
       @sdl_next_instance_id += 1
       @on_register.call game_controller
     rescue GameController::DeviceNotSupported
-      puts 'Nope!'
+      Async.logger.warn 'Unsupported device'
     end
 
     def unregister(instance_id)
-      puts "Game controller unregistered: instance_id=#{instance_id}"
+      Async.logger.debug "Game controller unregistered: instance_id=#{instance_id}"
       @game_controllers.delete_if { |id, _game_controller| instance_id == id }
     end
+
+    def run(task)
+      task.async do
+        loop do
+          process_sdl_events
+          task.sleep 0.001
+        end
+      end
+    end
+
+    private
 
     def process_sdl_events
       return unless (event = SDL2::Event.poll)
