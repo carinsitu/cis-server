@@ -40,10 +40,11 @@ module CisServer
 
     def setup_controller
       @controller.on_throttle = lambda { |throttle|
-        @car.throttle = throttle
-        Master.announce "cockpit/#{@id}/car/throttle", throttle.to_s
+        value = compute_car_throttle throttle
+        @car.throttle = value
+        Master.announce "cockpit/#{@id}/car/throttle", value.to_int.to_s
       }
-      @controller.on_steering = ->(steering) { @car.steering = steering }
+      @controller.on_steering = ->(steering) { @car.steering = compute_car_steering steering }
       @controller.on_boost = ->(boost) { @car.throttle_factor = boost ? 1.0 : 0.25 }
       @controller.on_trim_steering = ->(direction) { @car.trim_steering = direction }
     end
