@@ -13,9 +13,6 @@ module CisServer
       @udp_socket = UDPSocket.new
       @trim_steering = 0
 
-      @throttle_factor = 0.25
-      @throttle_raw = 0
-
       @on_rssi = ->(rssi) {}
       @on_ir = ->(ir) {}
 
@@ -33,8 +30,6 @@ module CisServer
     end
 
     def throttle=(value)
-      @throttle_raw = value
-      value *= @throttle_factor
       puts "#throttle= #{value}"
       data = [0x11, value].pack('cs')
       send_data data
@@ -46,11 +41,6 @@ module CisServer
       data = [0x20, @trim_steering].pack('cc')
       send_data data
       self.steering = 0
-    end
-
-    def throttle_factor=(value)
-      @throttle_factor = value
-      self.throttle = @throttle_raw
     end
 
     def video_channel=(value)

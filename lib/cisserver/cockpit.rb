@@ -16,6 +16,7 @@ module CisServer
     def initialize(id)
       @id = id
       @modifiers = []
+      @throttle_factor = 0.25
     end
 
     def car=(car)
@@ -45,7 +46,7 @@ module CisServer
         Master.announce "cockpit/#{@id}/car/throttle", value.to_int.to_s
       }
       @controller.on_steering = ->(steering) { @car.steering = compute_car_steering steering }
-      @controller.on_boost = ->(boost) { @car.throttle_factor = boost ? 1.0 : 0.25 }
+      @controller.on_boost = ->(boost) { @throttle_factor = boost ? 1.0 : 0.25 }
       @controller.on_trim_steering = ->(direction) { @car.trim_steering = direction }
     end
 
@@ -59,7 +60,7 @@ module CisServer
     end
 
     def compute_car_throttle(controller_value)
-      value = controller_value * 0.25
+      value = controller_value * @throttle_factor
       compute_car_property(:throttle, value)
     end
 
