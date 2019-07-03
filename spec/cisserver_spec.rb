@@ -21,22 +21,4 @@ RSpec.describe CisServer::Master do
   it 'can be instantiated' do
     expect(master).to be_instance_of CisServer::Master
   end
-
-  context 'gamepad´s right trigger pressed' do
-    let(:gamepad) { CisMocks::EmulatedGamepad.new master }
-    let(:car) { CisMocks::EmulatedCar.new master }
-
-    before do
-      # Instantiate emulated car
-      car
-      # Instantiate emulated gamepad
-      gamepad
-    end
-
-    it 'send throttle through MQTT' do
-      expect(master.class).to receive(:announce).with('cockpit/0/car/throttle', '32767')
-      # Move right trigger (ie. axis 5) to value: 24042
-      gamepad.move 5, 32_767
-    end
-  end
 end
