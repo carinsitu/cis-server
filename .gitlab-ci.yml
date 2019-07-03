@@ -31,6 +31,13 @@ test/unit:
   dependencies:
     - bundle/test
 
+test/behavior:
+  stage: test
+  script:
+    - bundle exec cucumber
+  dependencies:
+    - bundle/test
+
 test/rubocop:
   stage: test
   script:
