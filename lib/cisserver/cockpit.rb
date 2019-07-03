@@ -1,4 +1,5 @@
 require 'cisserver'
+require 'cisserver/modifier'
 
 module CisServer
   class Cockpit
@@ -14,6 +15,7 @@ module CisServer
 
     def initialize(id)
       @id = id
+      @modifiers = []
     end
 
     def car=(car)
@@ -53,6 +55,31 @@ module CisServer
       @car.on_ir = lambda { |code|
         puts "Cockpit #{@id}: IR: #{code}"
       }
+    end
+
+    def compute_car_throttle(controller_value)
+      value = controller_value * 0.25
+      compute_car_property(:throttle, value)
+    end
+
+    def compute_car_steering(controller_value)
+      compute_car_property(:steering, controller_value)
+    end
+
+    def compute_car_property(property, controller_value, min = -32_768, max = 32_767)
+      value = @modifiers.reduce(controller_value) do |memo, modifier|
+        modifier.send(property, memo)
+      end
+
+      return min if value < min
+      return max if value > max
+
+      value
+    end
+
+    def add_modifier(bonus)
+      modifier = CisServer::Modifier.const_get bonus
+      @modifiers.push(modifier.new)
     end
   end
 end
