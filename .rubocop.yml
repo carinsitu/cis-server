@@ -25,3 +25,7 @@ Metrics/BlockLength:
 Lint/AmbiguousBlockAssociation:
   Exclude:
     - 'spec/**/*'
+
+Naming/AsciiIdentifiers:
+  Exclude:
+    - 'features/step_definitions/**/*'
