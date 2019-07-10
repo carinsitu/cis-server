@@ -23,8 +23,9 @@ module CisServer
       Async.logger.debug "Game controller registered: device_id=#{sdl_device_id} instance_id=#{@sdl_next_instance_id}"
       @sdl_next_instance_id += 1
       @on_register.call game_controller
+      game_controller.run
     rescue GameController::DeviceNotSupported => e
-      Async.logger.warn 'Unsupported device', e.message
+      Async.logger.warn "Unsupported game controller: #{e.message}"
       @sdl_next_instance_id += 1
     end
 
@@ -49,7 +50,7 @@ module CisServer
       return unless (event = SDL2::Event.poll)
 
       case event
-      when SDL2::Event::JoyAxisMotion, SDL2::Event::JoyButton
+      when SDL2::Event::JoyButton
         @game_controllers[event.which].process_event event
       when SDL2::Event::JoyDeviceAdded
         register event.which

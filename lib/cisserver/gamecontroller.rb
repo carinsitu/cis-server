@@ -9,6 +9,11 @@ module CisServer
 
     attr_reader :id
 
+    SUPPORTED_DEVICES = [
+      '030000006d04000062c2000011010000',
+      '030000006d0400001dc2000014400000',
+    ]
+
     def initialize(id)
       @id = id
 
@@ -18,8 +23,7 @@ module CisServer
       @on_trim_steering = ->(direction) {}
 
       @joystick = SDL2::Joystick.open(@id)
-
-      raise DeviceNotSupported, @joystick.GUID unless @joystick.GUID == '030000006d0400001dc2000014400000'
+      raise DeviceNotSupported, @joystick.GUID unless SUPPORTED_DEVICES.include? @joystick.GUID
 
       @last_forward_value = 0
       @last_backward_value = 0
@@ -28,12 +32,44 @@ module CisServer
     end
 
     def process_event(event)
+      Async.logger.debug "SDL event: #{event}"
       case event
       when SDL2::Event::JoyButton
         handle_button_event event
       when SDL2::Event::JoyAxisMotion
         handle_axis_event event
       end
+    end
+
+    def run
+      Async do |task|
+        loop do
+          process_axis
+          task.sleep 0.01
+        end
+      end
+    end
+
+    def process_axis
+      @on_steering.call(@joystick.axis(0) * 1)
+
+      # Wheel
+      #factor = @joystick.axis(3) / 32767.0
+      #@on_throttle.call((((@joystick.axis(1) * -1.0) + 32768) / 2) * factor)
+
+      puts @joystick.axis(5) # Forward
+      forward_axis_value = @joystick.axis(5)
+      forward_value = (forward_axis_value + 32_768) / 2
+      backward_axis_value = @joystick.axis(2)
+      backward_value = -(backward_axis_value + 32_768) / 2
+
+      if backward_value.zero? || forward_value.zero?
+        throttle = backward_value.zero? ? forward_value : backward_value
+      else
+        throttle = 0
+      end
+
+      @on_throttle.call throttle
     end
 
     private

@@ -24,6 +24,7 @@ module CisServer
     end
 
     def steering=(value)
+      Async.logger.debug "#steering= #{value}"
       @node.send_udp_command(CisServer::Network::Protocol::STEERING_SET, value, 's')
     end
 
