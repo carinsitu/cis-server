@@ -35,7 +35,7 @@ module CisServer
       task.async do
         loop do
           process_sdl_events
-          task.sleep 0.001
+          task.sleep 0.01
         end
       end
     end
