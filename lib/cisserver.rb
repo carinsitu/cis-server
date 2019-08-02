@@ -26,9 +26,11 @@ module CisServer
       setup_nodes_master hostname, port
     end
 
-    def run(task)
-      @nodes_master.run(task)
-      @game_controllers_manager.run(task)
+    def run
+      Async do |task|
+        @nodes_master.run(task)
+        @game_controllers_manager.run(task)
+      end
     end
 
     def self.announce(topic, message)

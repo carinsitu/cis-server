@@ -2,6 +2,4 @@
 
 require 'cisserver'
 
-Async do |task|
-  CisServer::Master.new.run(task)
-end
+CisServer::Master.new.run
