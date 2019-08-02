@@ -49,9 +49,17 @@ module CisServer
       unpaired_cars.first
     end
 
-    def deregister
-      # TODO: Implement me
-      raise 'Not implemented'
+    def deregister(device)
+      case device
+      when Car
+        cockpit = @cockpits.find { |c| c.car == device }
+        cockpit.car = nil unless cockpit.nil?
+      when GameController
+        cockpit = @cockpits.find { |c| c.controller == device }
+        cockpit.controller = nil unless cockpit.nil?
+      else
+        raise "Unknown device: #{device}"
+      end
     end
   end
 end

@@ -21,6 +21,7 @@ module CisServer
 
     def car=(car)
       @car = car
+      return if car.nil?
 
       @car.video_channel = VIDEO_CHANNEL_FOR_ID[@id]
 
