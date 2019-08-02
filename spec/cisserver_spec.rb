@@ -10,8 +10,7 @@ end
 
 RSpec.describe CisServer::Master do
   before(:each) do
-    # Prepare CisServer to work with emulated devices (ie. mock classes)
-    CisMocks.setup
+    CisMocks.stub_mqtt
   end
 
   let(:master) { CisServer::Master.new '127.0.0.1' }

@@ -1,18 +1,24 @@
 module CisMocks
   class << self
     include RSpec::Mocks::ExampleMethods
-    def setup
-      mock_mqtt
+
+    def stub_sdl2
+      lib = File.expand_path('.', __dir__)
+      $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
     end
 
-    def udp_instance
-      @@udp_instance
+    def stub_mqtt
+      mqtt = class_double('MQTT::Client').as_stubbed_const
+      allow(mqtt).to receive :connect
     end
 
-    private
+    def announces
+      @@anounces ||= []
+    end
 
-    def mock_mqtt
-      allow(MQTT::Client).to receive(:connect)
+    def teardown
+      @@announces = []
+      SDL2::Joystick::Fake.teardown
     end
   end
 end

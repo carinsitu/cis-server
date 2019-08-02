@@ -1,7 +1,10 @@
 Alors('une accélération de {int}% doit être envoyée à la voiture') do |amount|
-  expect(@master.class).to receive(:announce).with('cockpit/0/car/throttle', (amount * 32_767 / 100).to_s)
-
   @find_another_name.call
+
+  Async do |task|
+    task.sleep 2
+    expect(CisMocks.announces).to include(topic: 'cockpit/0/car/throttle', message: (amount * 32_767 / 100).to_s)
+  end
 end
 
 Alors('un message contenant la valeur de gaz doit être envoyé') do

@@ -1,7 +1,7 @@
 module CisMocks
   class EmulatedGameController
-    def initialize(master)
-      @gamepad = EmulatedGamepad.new master
+    def initialize
+      @gamepad = EmulatedGamepad.new
     end
 
     def move_forward(value)

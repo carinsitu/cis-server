@@ -34,3 +34,4 @@ Naming/AsciiIdentifiers:
 Style/ClassVars:
   Exclude:
     - 'spec/mocks/cismocks.rb'
+    - 'spec/mocks/sdl2.rb'
