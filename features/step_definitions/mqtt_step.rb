@@ -3,7 +3,7 @@ Alors('une accélération de {int}% doit être envoyée à la voiture') do |amou
 
   Async do |task|
     task.sleep 2
-    expect(CisMocks.announces).to include(topic: 'cockpit/0/car/throttle', message: (amount * 32_767 / 100).to_s)
+    expect(CisDoubles.announces).to include(topic: 'cockpit/0/car/throttle', message: (amount * 32_767 / 100).to_s)
   end
 end
 

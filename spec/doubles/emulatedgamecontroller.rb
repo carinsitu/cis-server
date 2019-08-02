@@ -1,4 +1,4 @@
-module CisMocks
+module CisDoubles
   class EmulatedGameController
     def initialize
       @gamepad = EmulatedGamepad.new

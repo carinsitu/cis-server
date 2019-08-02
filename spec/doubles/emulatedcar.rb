@@ -1,4 +1,4 @@
-module CisMocks
+module CisDoubles
   class EmulatedCar
     def initialize
       @endpoint = Async::IO::Endpoint.parse('tcp://127.0.0.1:4200')

@@ -1,4 +1,4 @@
-require 'mocks/emulatedcar'
+require 'doubles/emulatedcar'
 
 RSpec.describe CisServer::Network::TcpServer do
   include_context Async::RSpec::Reactor
@@ -9,7 +9,7 @@ RSpec.describe CisServer::Network::TcpServer do
 
   context 'when running', timeout: 5 do
     let(:subject) { CisServer::Network::TcpServer.new '127.0.0.1', 4200 }
-    let(:car) { CisMocks::EmulatedCar.new }
+    let(:car) { CisDoubles::EmulatedCar.new }
 
     it 'accepts connections' do
       expect(subject).to receive :connected

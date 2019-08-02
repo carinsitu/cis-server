@@ -4,10 +4,10 @@ Et('un serveur lancé') do
 end
 
 Et('une voiture appairée') do
-  @car = CisMocks::EmulatedCar.new
+  @car = CisDoubles::EmulatedCar.new
   @car.connect
 end
 
 Et('un controlleur appairé') do
-  @game_controller = CisMocks::EmulatedGameController.new
+  @game_controller = CisDoubles::EmulatedGameController.new
 end

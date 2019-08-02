@@ -1,7 +1,7 @@
 require 'ostruct'
 
 require 'cisserver/carsmanager'
-require 'mocks/emulatedcar'
+require 'doubles/emulatedcar'
 
 RSpec.describe CisServer::CarsManager do
   let(:subject) do

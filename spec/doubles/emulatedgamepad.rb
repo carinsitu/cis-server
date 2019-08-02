@@ -1,4 +1,4 @@
-module CisMocks
+module CisDoubles
   class EmulatedGamepad
     def initialize
       @id = SDL2::Joystick::Fake.plug(self)

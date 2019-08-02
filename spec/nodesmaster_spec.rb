@@ -1,4 +1,4 @@
-require 'mocks/emulatedcar'
+require 'doubles/emulatedcar'
 
 RSpec.describe CisServer::Network::NodesMaster do
   include_context Async::RSpec::Reactor
@@ -9,7 +9,7 @@ RSpec.describe CisServer::Network::NodesMaster do
 
   context 'when registering a new node', timeout: 10 do
     let(:subject) { CisServer::Network::NodesMaster.new '127.0.0.1', 4200 }
-    let(:car) { CisMocks::EmulatedCar.new }
+    let(:car) { CisDoubles::EmulatedCar.new }
 
     it 'request the type and the version of node' do
       reactor_task = reactor.async do |task|

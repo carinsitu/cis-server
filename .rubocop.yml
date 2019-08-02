@@ -33,5 +33,5 @@ Naming/AsciiIdentifiers:
 
 Style/ClassVars:
   Exclude:
-    - 'spec/mocks/cismocks.rb'
-    - 'spec/mocks/sdl2.rb'
+    - 'spec/doubles/cisdoubles.rb'
+    - 'spec/doubles/sdl2.rb'

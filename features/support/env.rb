@@ -1,20 +1,20 @@
 require 'rspec'
 require 'cucumber/rspec/doubles'
 
-require_relative '../../spec/mocks/cismocks'
-CisMocks.stub_sdl2
+require_relative '../../spec/doubles/cisdoubles'
+CisDoubles.stub_sdl2
 
 require 'cisserver'
-require_relative '../../spec/mocks/cismocks/cisserver'
+require_relative '../../spec/doubles/cisdoubles/cisserver'
 
-require_relative '../../spec/mocks/emulatedcar'
-require_relative '../../spec/mocks/emulatedgamepad'
-require_relative '../../spec/mocks/emulatedgamecontroller'
+require_relative '../../spec/doubles/emulatedcar'
+require_relative '../../spec/doubles/emulatedgamepad'
+require_relative '../../spec/doubles/emulatedgamecontroller'
 
 Async.logger.level = ::Logger::DEBUG
 
 Before do
-  CisMocks.stub_mqtt
+  CisDoubles.stub_mqtt
 end
 
 Around do |scenario, block|
@@ -35,6 +35,6 @@ Around do |scenario, block|
 
   Async.logger.debug ' === CUCUMBER: Reactor done'
 
-  CisMocks.teardown
+  CisDoubles.teardown
   result
 end

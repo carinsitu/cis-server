@@ -1,4 +1,4 @@
-module CisMocks
+module CisDoubles
   class << self
     include RSpec::Mocks::ExampleMethods
 
