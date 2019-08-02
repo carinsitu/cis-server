@@ -23,7 +23,6 @@ bundle/test:
   script:
     - bundle install --jobs $(nproc) --path='vendor/bundle'
 
-
 test/unit:
   stage: test
   script:
