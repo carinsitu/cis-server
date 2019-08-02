@@ -16,7 +16,8 @@ module CisServer
       @on_trim_steering = ->(direction) {}
 
       @joystick = SDL2::Joystick.open(@id)
-      raise DeviceNotSupported unless @joystick.GUID == '030000006d0400001dc2000014400000'
+
+      raise DeviceNotSupported, @joystick.GUID unless @joystick.GUID == '030000006d0400001dc2000014400000'
 
       @last_forward_value = 0
       @last_backward_value = 0
