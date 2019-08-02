@@ -30,6 +30,7 @@ mosquitto_sub -t 'carinsitu/#' -v
 | IR               |           0.4.1 |
 | VTX Channel      |           0.5.0 |
 | MDNS             |           0.6.0 |
+| TCP              |           0.6.0 |
 
 ## Frequency table
 
