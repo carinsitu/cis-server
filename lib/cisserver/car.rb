@@ -25,12 +25,10 @@ module CisServer
     end
 
     def steering=(value)
-      Async.logger.debug "#steering= #{value}"
       @node.send_udp_command(CisServer::Network::Protocol::STEERING_SET, value, 's')
     end
 
     def throttle=(value)
-      Async.logger.debug "#throttle= #{value}"
       @node.send_udp_command(CisServer::Network::Protocol::THROTTLE_SET, value, 's')
     end
 
