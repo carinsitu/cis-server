@@ -24,6 +24,7 @@ module CisServer
       @on_register.call game_controller
     rescue GameController::DeviceNotSupported => e
       Async.logger.warn 'Unsupported device', e.message
+      @sdl_next_instance_id += 1
     end
 
     def unregister(instance_id)
