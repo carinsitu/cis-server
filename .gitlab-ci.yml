@@ -1,5 +1,5 @@
 ---
-image: registry.opus-codium.fr/image-builder/docker-image-builder:opuscodium-image
+image: registry.opus-codium.fr/image-builder/docker-images/rails-debian9:opuscodium-rails-debian9
 
 before_script:
   - apt update
