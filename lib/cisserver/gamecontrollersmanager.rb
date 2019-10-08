@@ -7,6 +7,7 @@ module CisServer
     attr_reader :game_controllers
 
     attr_writer :on_register
+    attr_writer :on_deregister
 
     def initialize
       SDL2.init(SDL2::INIT_JOYSTICK)
@@ -29,6 +30,7 @@ module CisServer
 
     def unregister(instance_id)
       Async.logger.debug "Game controller unregistered: instance_id=#{instance_id}"
+      @on_deregister.call @game_controllers[instance_id]
       @game_controllers.delete_if { |id, _game_controller| instance_id == id }
     end
 

@@ -30,7 +30,7 @@ module CisServer
 
     def controller=(controller)
       @controller = controller
-      pair_devices unless @car.nil?
+      pair_devices unless @car.nil? || controller.nil?
     end
 
     def pair_devices

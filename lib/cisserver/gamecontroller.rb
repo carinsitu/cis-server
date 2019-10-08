@@ -7,6 +7,8 @@ module CisServer
     attr_writer :on_boost
     attr_writer :on_trim_steering
 
+    attr_reader :id
+
     def initialize(id)
       @id = id
 
