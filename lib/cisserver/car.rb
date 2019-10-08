@@ -1,6 +1,7 @@
 require 'socket'
 
 require 'cisserver/network/node'
+require 'cisserver/videochannel'
 
 module CisServer
   class Car
@@ -40,7 +41,7 @@ module CisServer
     end
 
     def video_channel=(value)
-      Async.logger.debug "#video_channel= #{value}"
+      Async.logger.debug "#video_channel= #{value} (#{CisServer::VideoChannel.describe value})"
       @node.send_tcp_command(CisServer::Network::Protocol::VIDEO_CHANNEL_SET, value, 'C')
     end
 
