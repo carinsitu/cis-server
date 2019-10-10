@@ -36,7 +36,7 @@ module CisServer
     def trim_steering=(value)
       Async.logger.debug "#trim_steering= #{@trim_steering}"
       @trim_steering += value
-      @node.send_tcp_command(CisServer::Network::Protocol::TRIM_STEERING_SET, value, 'c')
+      @node.send_tcp_command(CisServer::Network::Protocol::TRIM_STEERING_SET, @trim_steering, 'c')
       self.steering = 0
     end
 
