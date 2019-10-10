@@ -7,10 +7,10 @@ module CisServer
     attr_reader :car
 
     VIDEO_CHANNEL_FOR_ID = {
-      0 => 33, # Raceband, Channel 2
-      1 => 34, # Raceband, Channel 3
-      2 => 35, # Raceband, Channel 4
-      3 => 36, # Raceband, Channel 5
+      0 => 32, # Raceband, Channel 1
+      1 => 33, # Raceband, Channel 2
+      2 => 24, # Fatshark, Channel 1
+      3 => 26, # Fatshark, Channel 3
     }.freeze
 
     def initialize(id)
