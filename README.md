@@ -3,8 +3,13 @@
 ## Installation
 
 ```
-sudo apt install libsdl2-dev libavahi-compat-libdnssd-dev
-bundle install --path vendor/bundle
+sudo apt install ruby-dev ruby-bundler make build-essential libsdl2-dev libavahi-compat-libdnssd-dev
+bundle set --global ~/.vendor/bundle
+bundle install
+```
+
+```
+sudo apt install mosquitto-clients mosquitto
 ```
 
 ## Usage
@@ -12,6 +17,8 @@ bundle install --path vendor/bundle
 ```
 bundle exec exe/cisserver
 ```
+
+Note: A running MQTT server is required on localhost.
 
 ## Snipets
 
