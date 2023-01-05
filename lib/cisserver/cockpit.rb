@@ -49,6 +49,7 @@ module CisServer
       @controller.on_steering = ->(steering) { @car.steering = compute_car_steering steering }
       @controller.on_boost = ->(boost) { @throttle_factor = boost ? 1.0 : 0.25 }
       @controller.on_trim_steering = ->(direction) { @car.trim_steering = direction }
+      @controller.on_save_settings = ->() { @car.persist_remote_settings }
     end
 
     def setup_car

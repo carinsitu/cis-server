@@ -38,6 +38,7 @@ mosquitto_sub -t 'carinsitu/#' -v
 | VTX Channel      |           0.5.0 |
 | MDNS             |           0.6.0 |
 | TCP              |           0.6.0 |
+| EEPROM           |           0.9.0 |
 
 ## Frequency table
 

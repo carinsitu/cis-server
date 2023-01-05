@@ -12,6 +12,7 @@ module CisServer
       STEERING_SET = 0x10
       THROTTLE_SET = 0x11
       TRIM_STEERING_SET = 0x20
+      WRITE_SETTINGS = 0xf0
       RSSI = 0x80
       IRCODE = 0x81
 

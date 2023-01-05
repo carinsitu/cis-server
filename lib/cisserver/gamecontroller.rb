@@ -6,6 +6,7 @@ module CisServer
     attr_writer :on_steering
     attr_writer :on_boost
     attr_writer :on_trim_steering
+    attr_writer :on_save_settings
 
     attr_reader :id
 
@@ -21,6 +22,7 @@ module CisServer
       @on_steering = ->(value) {}
       @on_boost = ->(active) {}
       @on_trim_steering = ->(direction) {}
+      @on_save_settings = ->() {}
 
       @joystick = SDL2::Joystick.open(@id)
       raise DeviceNotSupported, @joystick.GUID unless SUPPORTED_DEVICES.include? @joystick.GUID
@@ -57,10 +59,9 @@ module CisServer
       #factor = @joystick.axis(3) / 32767.0
       #@on_throttle.call((((@joystick.axis(1) * -1.0) + 32768) / 2) * factor)
 
-      puts @joystick.axis(5) # Forward
-      forward_axis_value = @joystick.axis(5)
+      forward_axis_value = @joystick.axis(5) # Forward (right)
       forward_value = (forward_axis_value + 32_768) / 2
-      backward_axis_value = @joystick.axis(2)
+      backward_axis_value = @joystick.axis(2) # Backward (left)
       backward_value = -(backward_axis_value + 32_768) / 2
 
       if backward_value.zero? || forward_value.zero?
@@ -78,10 +79,14 @@ module CisServer
       case event.button
       when 0
         @on_boost.call event.pressed
+      when 3
+        @on_save_settings.call if event.pressed
       when 4
         @on_trim_steering.call(-1) if event.pressed
       when 5
         @on_trim_steering.call(1) if event.pressed
+      else
+        Async.logger.debug "Unhandled button pressed: #{event.button}"
       end
     end
 

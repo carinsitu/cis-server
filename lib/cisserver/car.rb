@@ -24,7 +24,6 @@ module CisServer
     end
 
     def steering=(value)
-      Async.logger.debug "#steering= #{value}"
       @node.send_udp_command(CisServer::Network::Protocol::STEERING_SET, value, 's')
     end
 
@@ -33,7 +32,7 @@ module CisServer
     end
 
     def trim_steering=(value)
-      Async.logger.debug "#trim_steering= #{@trim_steering}"
+      Async.logger.debug "#trim_steering= #{value}"
       @node.send_tcp_command(CisServer::Network::Protocol::TRIM_STEERING_SET, value, 'c')
       self.steering = 0
     end
@@ -41,6 +40,11 @@ module CisServer
     def video_channel=(value)
       Async.logger.debug "#video_channel= #{value} (#{CisServer::VideoChannel.describe value})"
       @node.send_tcp_command(CisServer::Network::Protocol::VIDEO_CHANNEL_SET, value, 'C')
+    end
+
+    def persist_remote_settings
+      Async.logger.debug "Request node to write its settings internally (ie. EEPROM)"
+      @node.send_tcp_command(CisServer::Network::Protocol::WRITE_SETTINGS)
     end
 
     def node=(node)
